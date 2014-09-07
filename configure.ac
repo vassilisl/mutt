@@ -295,6 +295,7 @@ main ()
         if test "$ac_cv_func_decl_resizeterm" = yes; then
                 MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS resize.o"
         fi
+        AC_CHECK_FUNCS([use_extended_names])
         LIBS="$old_LIBS"
         ])
 
@@ -705,6 +706,9 @@ then
       [dnl GNUTLS found
       AC_CHECK_DECLS([GNUTLS_VERIFY_DISABLE_TIME_CHECKS], [], [],
                     [[#include <gnutls/x509.h>]])
+
+      LIBS="$LIBS -lgnutls"
+      AC_CHECK_FUNCS(gnutls_priority_set_direct)
 
       LIBS="$saved_LIBS"
       MUTTLIBS="$MUTTLIBS -lgnutls"
