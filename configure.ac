@@ -600,6 +600,16 @@ AC_ARG_ENABLE(imap, AS_HELP_STRING([--enable-imap],[Enable IMAP support]),
 ])
 AM_CONDITIONAL(BUILD_IMAP, test x$need_imap = xyes)
 
+AC_ARG_ENABLE(libnotify, AS_HELP_STRING([--enable-libnotify],[Enable libnotify support]),
+[       if test x$enableval = xyes ; then
+                AC_DEFINE(USE_LIBNOTIFY,1,[ Define if you want support for libnotifications. ])
+                LIBNOTIFY="-lnotify -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0"
+                LIBNOTIFYDEPS="-I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include"
+                need_libnotify="yes"
+        fi
+])
+AM_CONDITIONAL(BUILD_LIBNOTIFY, test x$need_libnotify = xyes)
+
 AC_ARG_ENABLE(smtp, AS_HELP_STRING([--enable-smtp],[include internal SMTP relay support]),
 	[if test $enableval = yes; then
 		AC_DEFINE(USE_SMTP, 1, [Include internal SMTP relay support])

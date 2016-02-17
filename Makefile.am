@@ -18,6 +18,11 @@ if BUILD_HCACHE
 HCVERSION = hcversion.h
 endif
 
+#if BUILD_LIBNOTIFY
+#LIBNOTIFY_INCLUDES=-I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
+#LIBNOTIFY_LDADD=-lnotify -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0
+#endif
+
 BUILT_SOURCES = keymap_defs.h patchlist.c reldate.h conststrings.c $(HCVERSION)
 
 bin_PROGRAMS = mutt $(DOTLOCK_TARGET) $(PGPAUX_TARGET)
