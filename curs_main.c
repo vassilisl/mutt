@@ -36,6 +36,10 @@
 #include "imap_private.h"
 #endif
 
+#ifdef USE_LIBNOTIFY
+#include <libnotify/notify.h>
+#endif
+
 #include "mutt_crypt.h"
 
 
@@ -489,6 +493,16 @@ static const struct mapping_t IndexHelp[] = {
   { NULL,	 0 }
 };
 
+int mutt_libnotify_notify(char* message) {
+  notify_init ("Mutt");
+  NotifyNotification * Mutt = notify_notification_new ("Mutt", message, "dialog-information");
+  notify_notification_show (Mutt, NULL);
+  g_object_unref (G_OBJECT(Mutt));
+  notify_uninit();
+
+  return 0;
+}
+
 /* This function handles the message index window as well as commands returned
  * from the pager (MENU_PAGER).
  */
@@ -574,6 +588,8 @@ int mutt_index_menu (void)
 	  mutt_message _("New mail in this mailbox.");
 	  if (option (OPTBEEPNEW))
 	    beep ();
+	  if (option (OPTLIBNOTIFYNEW))
+	    mutt_libnotify_notify("New mail in this mailbox");
 	} else if (check == M_FLAGS)
 	  mutt_message _("Mailbox was externally modified.");
 

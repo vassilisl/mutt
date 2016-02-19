@@ -299,6 +299,14 @@ struct option_t MuttVars[] = {
   ** notifying you of new mail.  This is independent of the setting of the
   ** $$beep variable.
   */
+#if defined(USE_LIBNOTIFY)
+  { "libnotify_new",		DT_BOOL, R_NONE, OPTLIBNOTIFYNEW, 0 },
+  /*
+  ** .pp
+  ** When this variable is \fIset\fP, mutt will send a libnotify message whenever
+  ** new mail has arrived.
+  */
+#endif
   { "bounce",	DT_QUAD, R_NONE, OPT_BOUNCE, M_ASKYES },
   /*
   ** .pp
